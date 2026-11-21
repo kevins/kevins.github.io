@@ -4,9 +4,6 @@
   "site": {
     "title": "KV Toolkit",
     "author": "KV",
-    "eyebrow": "Dynamics 365 · Dataverse · Power Apps",
-    "headline": "Tools that bridge Power Platform’s gaps.",
-    "intro": "Browser bookmarklets, platform controls and developer utilities.",
     "description": "Bookmarklets and tools for Dynamics 365, Dataverse and Power Apps by KV. Drag a button onto your favourites bar to install a tool.",
     "disclaimer": "Personal projects by KV, not affiliated with or endorsed by Microsoft. Dynamics 365, Dataverse and Power Apps are trademarks of Microsoft.",
     "url": "https://kevins.github.io/"
@@ -35,7 +32,9 @@
       "icon": "database",
       "tagline": "Query and change Dataverse data with SQL in your browser session: scripts, INSERT, UPDATE and DELETE behind a preview, and FetchXML to SQL.",
       "credit": "SQL Studio is inspired by SQL 4 CDS by Mark Carrington.",
-      "bookmarklet": { "path": "dist/sql-studio.bookmarklet.txt", "label": "SQL Studio" }
+      "bookmarklet": { "path": "dist/sql-studio.bookmarklet.txt", "label": "SQL Studio" },
+      "image": { "path": "docs/gallery/SQLStudio-thumbnail.png", "alt": "SQL Studio with a query of revenue by city and its result as a column chart" },
+      "video": { "path": "docs/gallery/SQLStudio-demo.mp4" }
     },
     "LevelUpBookmarklet": {
       "name": "Level Up Bookmarklet",

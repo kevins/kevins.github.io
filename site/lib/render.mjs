@@ -1,4 +1,4 @@
-// Renders the site's one page: a short header, then one card per tool with its demo, a line about it and its
+// Renders the site's one page: a grid as wide as the window, one card per tool with its demo, a line about it and its
 // buttons. Plain template strings: every value that comes from GitHub or the config passes through esc(), and every
 // URL through safeUrl() or a path the build made itself.
 import { esc, safeUrl } from './text.mjs'
@@ -62,26 +62,18 @@ ${canonical ? `<meta property="og:url" content="${esc(canonical)}">\n` : ''}${so
 <link rel="stylesheet" href="${esc(assets.css)}">
 <script src="${esc(assets.js)}" defer></script>`
 
-  const body = `<header class="masthead">
-  <div class="wrap">
-    <div class="brandrow">
-      <a class="brand" href="./">${MONOGRAM}<span class="brand__name">${esc(site.author)}</span><span class="brand__suffix">Toolkit</span></a>
-      <a class="brandrow__link" href="${esc(site.ownerUrl)}">${icon('github')}<span>GitHub</span></a>
-    </div>
-    <p class="eyebrow">${esc(site.eyebrow)}</p>
-    <h1 class="headline">${esc(site.headline)}</h1>
-    <p class="lead">${esc(site.intro)}</p>
-    ${hasBookmarklets ? `<p class="howto" id="howto">Show your favourites bar with <kbd data-key="mod">Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>, then drag a tool’s button onto it.</p>
-    <p class="browser-note" data-browser-note hidden></p>` : ''}
-  </div>
-</header>
-<main class="wrap">
-  <ul class="tools" role="list">
+  // No visible header: the page opens on the tools. The title and the drag instructions stay for screen readers (each
+  // drag button points at #howto); the browser note shows only where a browser can't take these favourites.
+  const body = `<main class="page">
+  <h1 class="sr-only">${esc(site.title)}</h1>
+  ${hasBookmarklets ? `<p class="sr-only" id="howto">Show your favourites bar with <kbd data-key="mod">Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>, then drag a tool’s button onto it.</p>
+  <p class="browser-note" data-browser-note hidden></p>
+  ` : ''}<ul class="tools" role="list">
     ${tools.map(renderTool).join('\n    ')}
   </ul>
 </main>
 <footer class="footer">
-  <div class="wrap">
+  <div class="footer__inner">
     <p>This page updates itself from <a href="${esc(site.ownerUrl)}">${esc(site.ownerUrl.replace(/^https:\/\//, ''))}</a> every hour, so each button always holds the tool’s latest version.</p>
     ${credits}
     <p>${esc(site.disclaimer)}</p>
@@ -124,15 +116,25 @@ function renderTool(t) {
     </li>`
 }
 
+// The media box has the demos' own shape (1280 x 912), so a demo shows whole. A picture much wider than that is
+// letterboxed rather than cut at the sides; a tall one shows its top.
+const MEDIA_RATIO = 1280 / 912
+function fitClass(m) {
+  const w = Number(m?.width)
+  const h = Number(m?.height)
+  if (!(w > 0 && h > 0)) return ''
+  if (h > w) return ' class="is-tall"'
+  return w / h > MEDIA_RATIO * 1.06 ? ' class="is-fit"' : ''
+}
+
 /** The demo: a video that plays like a GIF, else the picture (which may itself be a GIF), else a quiet tile. */
 function renderMedia(t) {
   if (t.video) {
     const poster = t.image ? ` poster="${esc(t.image.src)}"${dims(t.image)}` : ''
-    return `<div class="tool__media"><video src="${esc(t.video.src)}"${poster} autoplay muted loop playsinline aria-label="${esc(`Demo of ${t.name}`)}"></video></div>`
+    return `<div class="tool__media"><video src="${esc(t.video.src)}"${poster}${fitClass(t.image)} autoplay muted loop playsinline aria-label="${esc(`Demo of ${t.name}`)}"></video></div>`
   }
   if (t.image) {
-    const tall = Number(t.image.height) > Number(t.image.width) ? ' class="is-tall"' : ''
-    return `<div class="tool__media"><img src="${esc(t.image.src)}" alt="${esc(t.image.alt)}"${dims(t.image)} loading="lazy" decoding="async"${tall}></div>`
+    return `<div class="tool__media"><img src="${esc(t.image.src)}" alt="${esc(t.image.alt)}"${dims(t.image)} loading="lazy" decoding="async"${fitClass(t.image)}></div>`
   }
   return `<div class="tool__media tool__media--empty" aria-hidden="true">${icon(t.icon)}<span>${esc(t.name)}</span></div>`
 }

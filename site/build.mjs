@@ -199,7 +199,7 @@ export function selfCheck(html, tools) {
 
 function checkConfig(config) {
   if (!config || typeof config.owner !== 'string' || !config.owner) throw new Error('site/config.json needs "owner": the GitHub account whose repositories are shown.')
-  if (!config.site || typeof config.site !== 'object') throw new Error('site/config.json needs a "site" object (title, headline…).')
+  if (!config.site || typeof config.site !== 'object') throw new Error('site/config.json needs a "site" object (title, description…).')
   for (const [name, tool] of Object.entries(config.tools || {})) {
     if (tool.bookmarklet !== undefined && tool.bookmarklet !== false && (typeof tool.bookmarklet !== 'object' || tool.bookmarklet === null)) throw new Error(`site/config.json: tools.${name}.bookmarklet must be an object ({ "path": … }) or false.`)
     for (const key of ['image', 'video']) {

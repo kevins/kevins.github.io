@@ -1,6 +1,6 @@
-/* Layout: one page. A short header with the one thing to know (drag a button onto the favourites bar), then a grid
-   of cards, one per tool: its demo, a line about it, its buttons. Dark first, from the teal of the GitHub profile
-   banner. */
+/* Layout: one page with no header, a grid of cards as wide as the window (three across on a wide screen, two on a
+   narrower one, one on a phone), one per tool: its demo, a line about it, its buttons. Dark first, from the teal of
+   the GitHub profile banner. */
 
 @font-face {
   font-family: 'ArchivoVF';
@@ -41,6 +41,7 @@
   --body: 'ArchivoVF', 'Archivo', 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
   --mono: 'MartianMonoVF', 'Cascadia Mono', ui-monospace, 'SF Mono', Consolas, monospace;
   --gutter: clamp(16px, 4vw, 40px);
+  --edge: clamp(12px, 1.8vw, 28px); /* the full-width page's side margin */
   color-scheme: dark;
 }
 
@@ -167,24 +168,33 @@ kbd {
 .howto { margin: 18px 0 0; max-width: 72ch; font-size: 1rem; }
 .browser-note { margin: 14px 0 0; max-width: 60ch; padding: 10px 14px; border-radius: 8px; background: var(--caution-ground); color: var(--caution); font-size: 0.92rem; }
 
-/* Tools ----------------------------------------------------------------------------------------------------------- */
+/* Tools: the whole width of the window, three cards across from 1440px, two from 760px, else one --------------- */
+.page {
+  padding-block: var(--edge) clamp(40px, 6vw, 80px);
+  padding-left: max(var(--edge), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--edge), env(safe-area-inset-right, 0px));
+}
+.page .browser-note { margin: 0 0 var(--edge); max-width: none; }
 .tools {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 30rem), 1fr));
-  gap: clamp(18px, 3vw, 32px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--edge);
   margin: 0;
-  padding: 0 0 clamp(48px, 7vw, 88px);
+  padding: 0;
   list-style: none;
 }
+@media (max-width: 1439px) { .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 759px) { .tools { grid-template-columns: minmax(0, 1fr); } }
 .tool { display: flex; flex-direction: column; min-width: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
 .tool__media {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 1280 / 912; /* the demos' own shape, so a demo shows whole */
   overflow: hidden;
   border-bottom: 1px solid var(--line);
   border-radius: 13px 13px 0 0;
   background: var(--strip);
 }
 .tool__media video, .tool__media img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.tool__media .is-fit { object-fit: contain; object-position: center; }
 .tool__media--empty { display: grid; place-content: center; justify-items: center; gap: 12px; color: var(--muted); }
 .tool__media--empty .icon { width: 44px; height: 44px; color: var(--accent); }
 .tool__media--empty span { font-family: var(--display); font-weight: 800; font-stretch: 118%; font-size: 1.1rem; }
@@ -237,6 +247,7 @@ kbd {
 
 /* Footer and toast ------------------------------------------------------------------------------------------------- */
 .footer { padding-block: clamp(28px, 4vw, 44px) calc(clamp(28px, 4vw, 44px) + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); }
+.footer__inner { padding-left: max(var(--edge), env(safe-area-inset-left, 0px)); padding-right: max(var(--edge), env(safe-area-inset-right, 0px)); }
 .footer p { margin: 0 0 8px; max-width: 72ch; color: var(--muted); font-size: 0.88rem; }
 
 .toast {
