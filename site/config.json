@@ -8,8 +8,8 @@
     "disclaimer": "Personal projects by KV, not affiliated with or endorsed by Microsoft. Dynamics 365, Dataverse and Power Apps are trademarks of Microsoft.",
     "url": "https://kevins.github.io/"
   },
-  "exclude": ["SQLAdvancedFind"],
-  "order": ["DynamicsTranslator", "UnmanagedLayerScanner", "SQLStudio", "LevelUpBookmarklet", "NToNMultiSelect", "DataverseImpersonator"],
+  "exclude": ["SQLAdvancedFind", "UnmanagedLayerScanner"],
+  "order": ["DynamicsTranslator", "EnvironmentInspector", "SQLStudio", "LevelUpBookmarklet", "NToNMultiSelect", "DataverseImpersonator"],
   "tools": {
     "DynamicsTranslator": {
       "name": "Dynamics Translator",
@@ -19,13 +19,13 @@
       "image": { "path": "docs/gallery/DynamicsTranslator-thumbnail.png", "alt": "Dynamics Translator marking the labels of a Project record, with a field's translation popup open" },
       "video": { "path": "docs/gallery/DynamicsTranslator-demo.mp4" }
     },
-    "UnmanagedLayerScanner": {
-      "name": "Unmanaged Layer Scanner",
+    "EnvironmentInspector": {
+      "name": "Environment Inspector",
       "icon": "layers",
-      "tagline": "Find unmanaged layers over managed components, compare their changes, and remove selected active customizations.",
-      "bookmarklet": { "path": "layer-scanner.bookmarklet.txt", "label": "Unmanaged layers" },
-      "image": { "path": "docs/gallery/UnmanagedLayerScanner-thumbnail.png", "alt": "Unmanaged Layer Scanner listing components with an unmanaged layer" },
-      "video": { "path": "docs/gallery/UnmanagedLayerScanner-demo.mp4" }
+      "tagline": "Find and remove unmanaged layers over managed components, and compare solutions and data between environments.",
+      "bookmarklet": { "path": "environment-inspector.bookmarklet.txt", "label": "Environment Inspector" },
+      "image": { "path": "docs/gallery/EnvironmentInspector-thumbnail.png", "alt": "Environment Inspector listing 23 unmanaged layers in Contoso's managed solutions" },
+      "video": { "path": "docs/gallery/EnvironmentInspector-demo.mp4" }
     },
     "SQLStudio": {
       "name": "SQL Studio",

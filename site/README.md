@@ -56,14 +56,14 @@ Every field is optional; a repository with no entry still appears, with its GitH
 
 ```jsonc
 "tools": {
-  "UnmanagedLayerScanner": {                   // the repository name
-    "name": "Unmanaged Layer Scanner",         // display name (default: from the repository name)
+  "EnvironmentInspector": {                    // the repository name
+    "name": "Environment Inspector",           // display name (default: from the repository name)
     "icon": "layers",                          // star, layers, translate, database, select, user, bookmark
     "tagline": "One line about the tool.",     // default: the repository description
     "credit": "Shown in the footer.",          // optional
     "bookmarklet": {
-      "path": "layer-scanner.bookmarklet.txt", // the javascript: file
-      "label": "Unmanaged layers"              // the favourite's name (the button's text)
+      "path": "environment-inspector.bookmarklet.txt", // the javascript: file
+      "label": "Environment Inspector"         // the favourite's name (the button's text)
     },                                         // or false: not a bookmarklet, no button
     "video": { "path": "docs/demo.mp4" },               // the demo, played like a GIF (MP4 or WebM)
     "image": { "path": "docs/thumb.png", "alt": "…" }    // the picture (or the video's first frame); a GIF works too;
