@@ -9,7 +9,7 @@
     "url": "https://kevins.github.io/"
   },
   "exclude": ["SQLAdvancedFind", "UnmanagedLayerScanner"],
-  "order": ["DynamicsTranslator", "EnvironmentInspector", "SQLStudio", "LevelUpBookmarklet", "NToNMultiSelect", "DataverseImpersonator"],
+  "order": ["DynamicsTranslator", "EnvironmentInspector", "SQLStudio", "WebResourcesManager", "LevelUpBookmarklet", "NToNMultiSelect", "DataverseImpersonator"],
   "tools": {
     "DynamicsTranslator": {
       "name": "Dynamics Translator",
@@ -35,6 +35,15 @@
       "bookmarklet": { "path": "dist/sql-studio.bookmarklet.txt", "label": "SQL Studio" },
       "image": { "path": "docs/gallery/SQLStudio-thumbnail.png", "alt": "SQL Studio with a query of revenue by city and its result as a column chart" },
       "video": { "path": "docs/gallery/SQLStudio-demo.mp4" }
+    },
+    "WebResourcesManager": {
+      "name": "Web Resources Manager",
+      "icon": "code",
+      "tagline": "Edit a form's JavaScript right on the form, in VS Code's editor: compare, history, and a safe Save & Publish that never overwrites someone else's change.",
+      "credit": "Web Resources Manager is inspired by the Web Resources Manager plugin for XrmToolBox by MscrmTools.",
+      "bookmarklet": { "path": "dist/wrm.bookmarklet.txt", "label": "Web resources" },
+      "image": { "path": "docs/gallery/WebResourcesManager-thumbnail.png", "alt": "Web Resources Manager over an account form, comparing the saved version of its script with a change" },
+      "video": { "path": "docs/gallery/WebResourcesManager-demo.mp4" }
     },
     "LevelUpBookmarklet": {
       "name": "Level Up Bookmarklet",

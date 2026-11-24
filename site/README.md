@@ -58,7 +58,7 @@ Every field is optional; a repository with no entry still appears, with its GitH
 "tools": {
   "EnvironmentInspector": {                    // the repository name
     "name": "Environment Inspector",           // display name (default: from the repository name)
-    "icon": "layers",                          // star, layers, translate, database, select, user, bookmark
+    "icon": "layers",                          // star, layers, translate, database, select, user, bookmark, code
     "tagline": "One line about the tool.",     // default: the repository description
     "credit": "Shown in the footer.",          // optional
     "bookmarklet": {
