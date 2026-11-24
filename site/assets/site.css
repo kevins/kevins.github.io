@@ -269,20 +269,22 @@ kbd {
   transform: translateX(-50%);
 }
 
-/* The walk-through tip of a drag button (config.json "tip"; site.js): a note on its own line under the buttons, part of
-   the card (it covers nothing), its arrow pointing up at the button */
+/* The walk-through tip of a drag button (config.json "tip"; site.js): a callout floating just under the button, its
+   arrow pointing up at it, over the space under the card (no tool's title or text is there; no layout changes) */
 .tip {
-  position: relative;
+  position: absolute;
+  z-index: 40;
   display: flex;
-  flex-basis: 100%;
   align-items: center;
   gap: 14px;
-  margin-top: 8px;
+  width: max-content;
+  max-width: min(32rem, calc(100vw - 16px));
   padding: 10px 12px 10px 14px;
-  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  border: 1px solid transparent; /* an edge in forced-colours mode */
   border-radius: 10px;
-  background: color-mix(in srgb, var(--accent) 12%, var(--panel));
-  color: var(--text);
+  background: var(--text);
+  color: var(--ground);
+  box-shadow: 0 14px 30px -12px rgb(0 0 0 / 0.6);
   font-size: 0.9rem;
   line-height: 1.45;
   animation: tip-in 0.3s ease both;
@@ -291,12 +293,10 @@ kbd {
 .tip::before {
   content: '';
   position: absolute;
-  top: -7px;
+  top: -6px;
   left: var(--arrow-x, 48px);
   width: 12px;
   height: 12px;
-  border-top: inherit;
-  border-left: inherit;
   border-top-left-radius: 2px;
   background: inherit;
   transform: translateX(-50%) rotate(45deg);
@@ -304,7 +304,7 @@ kbd {
 .tip__body { flex: 1; min-width: 0; }
 .tip__text, .tip__hint { margin: 0; }
 .tip__text { font-weight: 650; }
-.tip__hint { margin-top: 2px; color: var(--muted); font-size: 0.85rem; }
+.tip__hint { margin-top: 2px; font-size: 0.85rem; opacity: 0.75; }
 .tip kbd { padding: 0 5px; border: 1px solid currentColor; border-radius: 4px; background: transparent; color: inherit; box-shadow: none; font: inherit; font-size: 0.8rem; }
 .tip__close {
   flex: none;

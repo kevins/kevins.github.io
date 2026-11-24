@@ -62,10 +62,10 @@
     })
   })
 
-  // A walk-through tip (config.json "tip"): a note right under a drag button, its arrow pointing up at it, saying to drag
-  // it onto the favourites bar. It is part of the card (it covers nothing: the card grows while it is there). It goes once
-  // the button is dragged or the tip is closed, and stays gone in this browser. Not on phones and tablets (no favourites
-  // bar to drag to).
+  // A walk-through tip (config.json "tip"): a callout just under a drag button, its arrow pointing up at it, saying to
+  // drag it onto the favourites bar. It floats over the space under the card (no tool's title or text is there) and
+  // changes no layout. It goes once the button is dragged or the tip is closed, and stays gone in this browser. Not on
+  // phones and tablets (no favourites bar to drag to).
   const tipLink = $('a.bm[data-tip]')
   const tipKey = tipLink ? `kv-toolkit:tip:${tipLink.dataset.slug}` : ''
   const tipDone = () => {
@@ -95,10 +95,13 @@
     close.type = 'button'
     tip.append(body, close)
 
-    // The arrow on the button's middle (the row of buttons wraps differently as the window narrows).
+    // Under the button, from its left edge (kept inside the window), the arrow on the button's middle.
     const place = () => {
       const b = tipLink.getBoundingClientRect()
-      tip.style.setProperty('--arrow-x', `${Math.round(b.left + b.width / 2 - tip.getBoundingClientRect().left)}px`)
+      const left = Math.min(Math.max(8, b.left), document.documentElement.clientWidth - tip.offsetWidth - 8)
+      tip.style.left = `${left + window.scrollX}px`
+      tip.style.top = `${b.bottom + window.scrollY + 12}px`
+      tip.style.setProperty('--arrow-x', `${Math.round(b.left + b.width / 2 - left)}px`)
     }
     let open = false
     const hide = (remember) => {
@@ -123,9 +126,8 @@
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') hide(true)
     })
-    // At once, as the page opens: the card has its full height from the start (nothing jumps later).
     open = true
-    tipLink.parentElement.append(tip)
+    document.body.append(tip)
     tipLink.classList.add('has-tip')
     // Read with the button: "Drag to your favourites bar" and the tip.
     tipLink.setAttribute('aria-describedby', 'howto tip')
