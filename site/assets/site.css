@@ -269,42 +269,45 @@ kbd {
   transform: translateX(-50%);
 }
 
-/* The walk-through tip on a drag button (config.json "tip"; site.js): a callout above it, its arrow on the button */
+/* The walk-through tip of a drag button (config.json "tip"; site.js): a note on its own line under the buttons, part of
+   the card (it covers nothing), its arrow pointing up at the button */
 .tip {
-  position: absolute;
-  z-index: 40;
-  width: max-content;
-  max-width: min(21rem, calc(100vw - 16px));
-  padding: 14px 16px 12px;
-  border: 1px solid transparent; /* an edge in forced-colours mode */
-  border-radius: 12px;
-  background: var(--text);
-  color: var(--ground);
-  box-shadow: var(--shadow);
-  font-size: 0.93rem;
+  position: relative;
+  display: flex;
+  flex-basis: 100%;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+  padding: 10px 12px 10px 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 12%, var(--panel));
+  color: var(--text);
+  font-size: 0.9rem;
   line-height: 1.45;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  animation: tip-in 0.3s ease both;
 }
-.tip.is-shown { opacity: 1; transform: none; }
-.tip::after {
+@keyframes tip-in { from { opacity: 0; transform: translateY(-4px); } }
+.tip::before {
   content: '';
   position: absolute;
-  left: var(--arrow-x, 28px);
-  bottom: -7px;
-  width: 14px;
-  height: 14px;
-  border-radius: 2px;
+  top: -7px;
+  left: var(--arrow-x, 48px);
+  width: 12px;
+  height: 12px;
+  border-top: inherit;
+  border-left: inherit;
+  border-top-left-radius: 2px;
   background: inherit;
   transform: translateX(-50%) rotate(45deg);
 }
-.tip__title { margin: 0 0 4px; font-family: var(--display); font-weight: 800; font-stretch: 118%; font-size: 1.02rem; }
+.tip__body { flex: 1; min-width: 0; }
 .tip__text, .tip__hint { margin: 0; }
-.tip__hint { margin-top: 6px; font-size: 0.86rem; opacity: 0.8; }
-.tip kbd { padding: 0 5px; border: 1px solid currentColor; border-radius: 4px; background: transparent; color: inherit; box-shadow: none; font: inherit; font-size: 0.82rem; }
-.tip__actions { display: flex; justify-content: flex-end; margin-top: 10px; }
+.tip__text { font-weight: 650; }
+.tip__hint { margin-top: 2px; color: var(--muted); font-size: 0.85rem; }
+.tip kbd { padding: 0 5px; border: 1px solid currentColor; border-radius: 4px; background: transparent; color: inherit; box-shadow: none; font: inherit; font-size: 0.8rem; }
 .tip__close {
+  flex: none;
   padding: 7px 14px;
   border: 1px solid transparent;
   border-radius: 8px;
