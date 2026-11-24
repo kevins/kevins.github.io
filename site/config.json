@@ -15,6 +15,7 @@
       "name": "Dynamics Translator",
       "icon": "translate",
       "tagline": "Edit labels where they appear in Dynamics 365 and Power Apps, or work in bulk with an Excel-style translation workbench.",
+      "tip": "Drag this button onto your favourites bar to install Dynamics Translator. Then open a Dynamics 365 page and click it there.",
       "bookmarklet": { "path": "dist/translator.bookmarklet.txt", "label": "Translator" },
       "image": { "path": "docs/gallery/DynamicsTranslator-thumbnail.png", "alt": "Dynamics Translator marking the labels of a Project record, with a field's translation popup open" },
       "video": { "path": "docs/gallery/DynamicsTranslator-demo.mp4" }

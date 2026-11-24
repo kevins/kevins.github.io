@@ -61,6 +61,8 @@ Every field is optional; a repository with no entry still appears, with its GitH
     "icon": "layers",                          // star, layers, translate, database, select, user, bookmark, code
     "tagline": "One line about the tool.",     // default: the repository description
     "credit": "Shown in the footer.",          // optional
+    "tip": "Drag this button to …",            // optional: a callout on the drag button when the page opens,
+                                               // until it is dragged or closed (not on phones and tablets)
     "bookmarklet": {
       "path": "environment-inspector.bookmarklet.txt", // the javascript: file
       "label": "Environment Inspector"         // the favourite's name (the button's text)

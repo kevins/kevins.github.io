@@ -269,6 +269,61 @@ kbd {
   transform: translateX(-50%);
 }
 
+/* The walk-through tip on a drag button (config.json "tip"; site.js): a callout above it, its arrow on the button */
+.tip {
+  position: absolute;
+  z-index: 40;
+  width: max-content;
+  max-width: min(21rem, calc(100vw - 16px));
+  padding: 14px 16px 12px;
+  border: 1px solid transparent; /* an edge in forced-colours mode */
+  border-radius: 12px;
+  background: var(--text);
+  color: var(--ground);
+  box-shadow: var(--shadow);
+  font-size: 0.93rem;
+  line-height: 1.45;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.tip.is-shown { opacity: 1; transform: none; }
+.tip::after {
+  content: '';
+  position: absolute;
+  left: var(--arrow-x, 28px);
+  bottom: -7px;
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  background: inherit;
+  transform: translateX(-50%) rotate(45deg);
+}
+.tip__title { margin: 0 0 4px; font-family: var(--display); font-weight: 800; font-stretch: 118%; font-size: 1.02rem; }
+.tip__text, .tip__hint { margin: 0; }
+.tip__hint { margin-top: 6px; font-size: 0.86rem; opacity: 0.8; }
+.tip kbd { padding: 0 5px; border: 1px solid currentColor; border-radius: 4px; background: transparent; color: inherit; box-shadow: none; font: inherit; font-size: 0.82rem; }
+.tip__actions { display: flex; justify-content: flex-end; margin-top: 10px; }
+.tip__close {
+  padding: 7px 14px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font: inherit;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+.tip__close:hover { background: var(--accent-hi); }
+.tip__close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.bm.has-tip { animation: tip-pulse 1.8s ease-out infinite; }
+@keyframes tip-pulse {
+  0% { box-shadow: var(--shadow), 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent); }
+  70%, 100% { box-shadow: var(--shadow), 0 0 0 12px color-mix(in srgb, var(--accent) 0%, transparent); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
+  .bm.has-tip { outline: 2px solid var(--accent); outline-offset: 3px; }
 }

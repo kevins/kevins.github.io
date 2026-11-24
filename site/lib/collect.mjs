@@ -69,6 +69,8 @@ export async function collectTool(gh, repo, cfg, { owner, saveMedia, warn }) {
     // paragraph).
     tagline: cfg.tagline || repo.description || '',
     credit: cfg.credit || '',
+    // A walk-through tip on the drag button, shown when the page opens (site.js): the config's, else none.
+    tip: typeof cfg.tip === 'string' ? cfg.tip.trim() : '',
     commit,
     updatedAt: committedAt,
     version: '',

@@ -101,7 +101,7 @@ function renderTool(t) {
   const id = esc(t.slug)
   const b = t.bookmarklet
   const install = b
-    ? `<a class="bm" id="bm-${id}" href="${esc(b.href)}" draggable="true" data-slug="${id}" data-chars="${b.chars}" title="Drag to your favourites bar" aria-describedby="howto">${icon(t.icon)}${esc(b.label)}</a>
+    ? `<a class="bm" id="bm-${id}" href="${esc(b.href)}" draggable="true" data-slug="${id}" data-chars="${b.chars}"${t.tip ? ` data-tip="${esc(t.tip)}"` : ''} title="Drag to your favourites bar" aria-describedby="howto">${icon(t.icon)}${esc(b.label)}</a>
           <button class="btn" type="button" data-copy="bm-${id}" hidden>${icon('copy')}<span>Copy<span class="sr-only"> the ${esc(b.label)} bookmarklet</span></span></button>
           `
     : ''

@@ -62,6 +62,84 @@
     })
   })
 
+  // A walk-through tip (config.json "tip"): a callout pointing at a drag button when the page opens, saying to drag it
+  // onto the favourites bar. It goes once the button is dragged or the tip is closed, and stays gone in this browser.
+  // Not on phones and tablets (no favourites bar to drag to).
+  const tipLink = $('a.bm[data-tip]')
+  const tipKey = tipLink ? `kv-toolkit:tip:${tipLink.dataset.slug}` : ''
+  const tipDone = () => {
+    try {
+      return localStorage.getItem(tipKey) === 'done'
+    } catch {
+      return false
+    }
+  }
+  if (tipLink && !touchOnly && !tipDone()) {
+    const mod = /mac|iphone|ipad/i.test(platform) ? '⌘' : 'Ctrl'
+    const el = (tag, cls, text) => {
+      const node = document.createElement(tag)
+      if (cls) node.className = cls
+      if (text) node.textContent = text
+      return node
+    }
+    const tip = el('div', 'tip')
+    tip.id = 'tip'
+    tip.setAttribute('role', 'note')
+    tip.setAttribute('aria-label', 'How to install')
+    tip.append(el('p', 'tip__title', 'Install it in one drag'), el('p', 'tip__text', tipLink.dataset.tip))
+    const hint = el('p', 'tip__hint', 'No favourites bar? Show it with ')
+    hint.append(el('kbd', '', mod), '+', el('kbd', '', 'Shift'), '+', el('kbd', '', 'B'), '.')
+    const close = el('button', 'tip__close', 'Got it')
+    close.type = 'button'
+    const actions = el('div', 'tip__actions')
+    actions.append(close)
+    tip.append(hint, actions)
+
+    // Above the button, its arrow on the button's middle, kept inside the window.
+    const place = () => {
+      const r = tipLink.getBoundingClientRect()
+      const width = tip.offsetWidth
+      const left = Math.min(Math.max(8, r.left), document.documentElement.clientWidth - width - 8)
+      tip.style.left = `${left + window.scrollX}px`
+      tip.style.top = `${r.top + window.scrollY - tip.offsetHeight - 14}px`
+      tip.style.setProperty('--arrow-x', `${Math.round(r.left + r.width / 2 - left)}px`)
+    }
+    let open = false
+    const hide = (remember) => {
+      if (!open) return
+      open = false
+      tip.remove()
+      tipLink.classList.remove('has-tip')
+      tipLink.setAttribute('aria-describedby', 'howto')
+      window.removeEventListener('resize', place)
+      if (remember)
+        try {
+          localStorage.setItem(tipKey, 'done')
+        } catch {
+          /* it shows again next time */
+        }
+    }
+    close.addEventListener('click', () => {
+      hide(true)
+      tipLink.focus()
+    })
+    tipLink.addEventListener('dragstart', () => hide(true))
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') hide(true)
+    })
+    window.setTimeout(() => {
+      open = true
+      document.body.append(tip)
+      tipLink.classList.add('has-tip')
+      // Read with the button: "Drag to your favourites bar" and the tip.
+      tipLink.setAttribute('aria-describedby', 'howto tip')
+      place()
+      window.addEventListener('resize', place)
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => open && place())
+      window.requestAnimationFrame(() => tip.classList.add('is-shown'))
+    }, reducedMotion ? 0 : 600)
+  }
+
   // Copy: the bookmarklet's code, for pasting as the address of a new favourite.
   async function copyText(text) {
     try {
